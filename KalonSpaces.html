@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>καλόν spaces</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #c8a600;
+      --light-gray: #e9ecef;
+      --dark: #111111;
+      --text: #111111;
+      --white: #ffffff;
+      --shadow: 0 10px 30px rgba(0,0,0,.08);
+    }
+
+    html { scroll-behavior: smooth; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Montserrat', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: #fff;
+      line-height: 1.6;
+    }
+
+    /* ====== NAVBAR ====== */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--light-gray);
+      box-shadow: var(--shadow);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 20px;
+    }
+    .brand {
+      font-weight: 800;
+      font-size: clamp(20px, 3vw, 28px);
+      color: #000000;
+      letter-spacing: .5px;
+      -webkit-text-stroke: .4px rgba(0,0,0,.25);
+    }
+    .menu {
+      display: flex;
+      justify-content: center;
+      gap: clamp(12px, 3vw, 28px);
+    }
+    .menu a {
+      position: relative;
+      text-decoration: none;
+      color: #000000;
+      font-weight: 600;
+      font-size: clamp(14px, 1.8vw, 16px);
+      padding: 6px 2px;
+    }
+    .menu a::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 0; bottom: -2px;
+      height: 2px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .25s ease;
+    }
+    .menu a:hover {
+      color: var(--gold);
+    }
+    .menu a:hover::after { transform: scaleX(1); }
+
+    .right-icons { display: flex; justify-content: flex-end; gap: 14px; }
+    .icon-link { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; background: #fff; box-shadow: var(--shadow); transition: transform .15s; }
+    .icon-link:hover { transform: translateY(-2px); }
+    .icon-link svg { width: 18px; height: 18px; }
+
+    /* ====== SECTIONS ====== */
+    section { scroll-margin-top: 90px; }
+
+    /* ====== INICIO - HERO ROTANTE ====== */
+    .hero {
+      position: relative;
+      min-height: 70vh;
+      display: grid;
+      place-items: stretch;
+      overflow: hidden;
+    }
+    .hero-slide {
+      position: absolute; inset: 0;
+      transition: opacity .8s ease;
+      opacity: 0;
+    }
+    .hero-slide.active { opacity: 1; }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1fr;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 48px 20px;
+    }
+    .hero-card {
+      width: min(720px, 95%);
+      background: rgba(255,255,255,.9);
+      border-radius: 16px;
+      padding: clamp(18px, 4vw, 28px);
+      box-shadow: var(--shadow);
+    }
+    .hero-title {
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: 800;
+      margin: 0 0 10px 0;
+    }
+    .hero-desc { font-size: clamp(14px, 2.2vw, 18px); margin: 0; }
+
+    .hero-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 44px; height: 44px; border: none; border-radius: 50%;
+      background: rgba(255,255,255,.9); box-shadow: var(--shadow);
+      cursor: pointer; display: grid; place-items: center;
+    }
+    .hero-arrow.left { left: 16px; }
+    .hero-arrow.right { right: 16px; }
+
+    /* ====== INICIO - BLOQUE BLANCO ====== */
+    .intro-white {
+      background: #fff;
+    }
+    .intro-inner {
+      max-width: 1200px; margin: 0 auto; padding: 64px 20px;
+      display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; align-items: center;
+    }
+    .intro-right { grid-column: 7 / 13; }
+    .intro-right h2 { font-size: clamp(22px, 4vw, 34px); margin: 0 0 10px 0; }
+    .intro-right p { margin: 8px 0; }
+    @media (max-width: 900px){ .intro-right { grid-column: 1 / -1; } }
+
+    /* ====== SOBRE NOSOTROS ====== */
+    #sobre-nosotros { background: #000; color: #fff; }
+    .about-inner { max-width: 1200px; margin: 0 auto; padding: 80px 20px; }
+    .about-title { text-align: center; font-size: clamp(28px, 5vw, 42px); font-weight: 800; letter-spacing: .6px; margin: 0 0 40px 0; }
+    .about-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .about-card { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: 16px; padding: 24px; }
+    .about-card h3 { display: flex; align-items: center; gap: 10px; margin: 0 0 10px 0; font-size: 20px; }
+    .about-card p { margin: 0; opacity: .95; }
+    @media (max-width: 900px){ .about-grid { grid-template-columns: 1fr; } }
+
+    /* ====== SERVICIOS ====== */
+    #servicios { background: #fff; color: #111; }
+    .services-inner { max-width: 1200px; margin: 0 auto; padding: 80px 20px; }
+    .services-title { text-align: center; font-size: clamp(26px, 5vw, 40px); font-weight: 800; margin: 0 0 28px 0; }
+    .services-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; }
+    .services-list { grid-column: 1 / 7; }
+    .services-list ul { margin: 0; padding-left: 18px; }
+    .services-list li { margin: 10px 0; font-weight: 600; }
+    .quote-box { grid-column: 8 / 13; display: flex; flex-direction: column; align-items: stretch; gap: 12px; }
+    .quote-title { font-size: clamp(20px, 4vw, 28px); font-weight: 800; text-align: center; }
+    .quote-input { width: 100%; min-height: 140px; padding: 12px; border-radius: 12px; border: 1px solid #ddd; font: inherit; }
+    @media (max-width: 900px){ .services-list { grid-column: 1 / -1; } .quote-box { grid-column: 1 / -1; } }
+
+    /* ====== CONTACTO ====== */
+    #contacto { background: var(--light-gray); }
+    .contact-inner { max-width: 1200px; margin: 0 auto; padding: 80px 20px; }
+    .contact-title { text-align: center; font-size: clamp(26px, 5vw, 40px); font-weight: 800; margin: 0 0 28px 0; }
+    .contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .contact-card { background: #fff; border-radius: 16px; padding: 20px; box-shadow: var(--shadow); }
+    .contact-card h4 { margin: 0 0 6px 0; font-size: 14px; letter-spacing: .6px; color: #555; }
+    .contact-card p { margin: 0; font-weight: 700; }
+    @media (max-width: 900px){ .contact-grid { grid-template-columns: 1fr; } }
+
+    /* ====== SCROLL TO TOP ====== */
+    .to-top {
+      position: fixed; right: 16px; bottom: 16px; z-index: 1000;
+      width: 46px; height: 46px; border-radius: 50%; border: none;
+      background: var(--gold); color: #000; font-weight: 900;
+      cursor: pointer; box-shadow: var(--shadow);
+    }
+  </style>
+</head>
+<body>
+  <!-- ====== NAVBAR ====== -->
+  <header class="navbar">
+    <div class="nav-inner">
+     <div class="brand">καλόν spaces</div>
+
+      <nav class="menu" aria-label="Principal">
+        <a href="#inicio">Inicio</a>
+        <a href="#sobre-nosotros">Sobre nosotros</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+
+      <div class="right-icons">
+        <a class="icon-link" href="https://wa.me/50761044125" target="_blank" aria-label="WhatsApp">
+          <!-- WhatsApp SVG -->
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M20 12.05A8 8 0 1 1 6.27 18L4 20l2.24-.59A8 8 0 0 0 20 12.05Z" stroke="#25D366" stroke-width="1.6"/>
+            <path d="M8.5 9.5c0 3 3.5 5.5 4.5 5.5s1.5-1 2-1.5-.5-1-1-1.5-.5-.5-1 0-.5.5-1 0-1.5-1.5-1.5-2 0-.5-.5-1-.5-1-1.5-.5Z" fill="#25D366"/>
+          </svg>
+        </a>
+        <a class="icon-link" href="https://instagram.com/kalonspaces" target="_blank" aria-label="Instagram">
+          <!-- Instagram SVG -->
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="5" stroke="#E1306C" stroke-width="1.6"/>
+            <circle cx="12" cy="12" r="4" stroke="#E1306C" stroke-width="1.6"/>
+            <circle cx="17.5" cy="6.5" r="1.2" fill="#E1306C"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ====== INICIO ====== -->
+  <main id="inicio">
+    <!-- Hero rotante (colores que luego se reemplazan por imágenes) -->
+    <section class="hero" aria-label="Escaparate">
+      <div class="hero-slide" style="background: url(https://lirp.cdn-website.com/00af6f0a/dms3rep/multi/opt/WhatsApp+Image+2025-02-17+at+9.10.47+PM-1920w.jpeg) center/cover no-repeat;"></div>
+      <div class="hero-slide" style="background: url(https://nasherarquitectos.com.mx/wp-content/uploads/2018/03/remodelacion_1.jpg) center/cover no-repeat;"></div>
+      <div class="hero-slide" style="background: url(https://www.converge-architecture.com/wp-content/uploads/2022/03/01-14.jpg) center/cover no-repeat"></div>
+
+      <div class="hero-content">
+        <div class="hero-card">
+          <h1 class="hero-title">Remodelaciones, mantenimiento y construcciones en Panamá</h1>
+          <p class="hero-desc">Ofrecemos servicios de alta calidad para transformar tus espacios con profesionalismo y dedicación.</p>
+        </div>
+      </div>
+
+      <button class="hero-arrow left" aria-label="Anterior" id="prevSlide" title="Anterior">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 18l-6-6 6-6" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="hero-arrow right" aria-label="Siguiente" id="nextSlide" title="Siguiente">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </section>
+
+    <!-- Bloque blanco con contenido a la derecha -->
+    <section class="intro-white">
+      <div class="intro-inner">
+        <div class="intro-right">
+          <h2>Construcción y Remodelaciones de Calidad</h2>
+          <p>Transformamos tus ideas en realidad. Desde proyectos de construcción hasta remodelaciones completas, ofrecemos soluciones personalizadas con materiales de alta calidad y mano de obra especializada.</p>
+          <p>Ofrecemos servicios de alta calidad para transformar tus espacios con profesionalismo y dedicación.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ====== SOBRE NOSOTROS ====== -->
+  <section id="sobre-nosotros">
+    <div class="about-inner">
+      <h2 class="about-title">SOBRE NOSOTROS</h2>
+      <div class="about-grid">
+        <article class="about-card">
+          <h3>
+            <!-- Ícono Visión -->
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z" stroke="#fff" opacity=".9" stroke-width="1.6"/><circle cx="12" cy="12" r="3" fill="#fff" opacity=".9"/></svg>
+            Visión
+          </h3>
+          <p>Nuestra visión es ser una empresa líder en remodelación de interiores, reconocida por la innovación, la calidad en el diseño y la satisfacción total de nuestros clientes.</p>
+        </article>
+        <article class="about-card">
+          <h3>
+            <!-- Ícono Misión -->
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l2.5 2.5M16.5 16.5 19 19M5 19l2.5-2.5M16.5 7.5 19 5" stroke="#fff" opacity=".9" stroke-width="1.6" stroke-linecap="round"/></svg>
+            Misión
+          </h3>
+          <p>Nuestra misión es poder transformar espacios interiores en ambientes funcionales, estéticos y personalizados, mejorando la calidad de vida de nuestros clientes a través de diseño, innovación y compromiso con la excelencia.</p>
+        </article>
+        <article class="about-card">
+          <h3>
+            <!-- Ícono Objetivos -->
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#fff" opacity=".9" stroke-width="1.6"/><path d="M7 12l3 3 7-7" stroke="#fff" opacity=".9" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Objetivos
+          </h3>
+          <p>Ofrecer remodelaciones de alta calidad que superen las expectativas del cliente.<br>Capacitar al equipo en nuevas tendencias y técnicas.<br>Implementar prácticas sostenibles y reducir desperdicios.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== SERVICIOS ====== -->
+  <section id="servicios">
+    <div class="services-inner">
+      <h2 class="services-title">Servicios</h2>
+      <div class="services-grid">
+        <div class="services-list">
+          <ul>
+            <li>Diseño de interiores (solo diseño)</li>
+            <li>Remodelación de cocina</li>
+            <li>Remodelación de baño</li>
+            <li>Pintura de interiores</li>
+            <li>Instalación de pisos</li>
+            <li>Acabados en madera</li>
+          </ul>
+        </div>
+        <div class="quote-box">
+          <div class="quote-title">COTIZA YA!</div>
+          <textarea class="quote-input" placeholder="Describe tu proyecto aquí..."></textarea>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== CONTACTO ====== -->
+  <section id="contacto">
+    <div class="contact-inner">
+      <h2 class="contact-title">CONTACTO</h2>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <h4>DIRECCIÓN</h4>
+          <p>Calle 50</p>
+        </div>
+        <div class="contact-card">
+          <h4>TELÉFONO</h4>
+          <p>+507 6104-4125</p>
+        </div>
+        <div class="contact-card">
+          <h4>CORREO</h4>
+          <p>kalonspacesremodelaciones@gmail.com<br>servicios@kalonspaces.com</p>
+        </div>
+        <div class="contact-card">
+          <h4>HORARIO DE ATENCIÓN</h4>
+          <p>Lun - Vie: 8:00 a. m. - 5:00 p. m.<br>Sábado: 8:00 a. m. - 12:00 p. m.<br>Domingo: Cerrado</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== SCROLL TO TOP ====== -->
+  <button class="to-top" id="toTop" aria-label="Volver arriba" title="Volver arriba">↑</button>
+
+  <script>
+    // ====== HERO ROTANTE (colores -> luego imágenes) ======
+    const slides = Array.from(document.querySelectorAll('.hero-slide'));
+    let current = 0; let timer = null; const DURATION = 5000;
+
+    function showSlide(i){
+      slides.forEach((s, idx) => s.classList.toggle('active', idx === i));
+      current = i;
+    }
+    function next(){ showSlide((current + 1) % slides.length); }
+    function prev(){ showSlide((current - 1 + slides.length) % slides.length); }
+    function start(){ stop(); timer = setInterval(next, DURATION); }
+    function stop(){ if(timer) clearInterval(timer); }
+
+    document.getElementById('nextSlide').addEventListener('click', () => { next(); start(); });
+    document.getElementById('prevSlide').addEventListener('click', () => { prev(); start(); });
+
+    // Inicializa
+    showSlide(0); start();
+
+    // ====== SCROLL TO TOP ======
+    document.getElementById('toTop').addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ====== REEMPLAZO FUTURO POR IMÁGENES ======
+    // Cuando tengas las imágenes listas:
+    //   - Imagen 1 (dorado) -> reemplaza estilo de slides[0] por `background: url('ruta/imagen1.jpg') center/cover no-repeat;`
+    //   - Imagen 2 (negro)  -> `slides[1].style.background = "url('ruta/imagen2.jpg') center/cover no-repeat";`
+    //   - Imagen 3 (blanco) -> `slides[2].style.background = "url('ruta/imagen3.jpg') center/cover no-repeat";`
+  </script>
+</body>
+</html>
